@@ -4,8 +4,7 @@ import init from "react_native_mqtt";
 import { AsyncStorage } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 
-const Map = ({latitude, longitude}) => {
-  
+const Map = ({ latitude, longitude }) => {
   return (
     <MapView
       style={styles.mapStyle}

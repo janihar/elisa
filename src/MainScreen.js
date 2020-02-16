@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  Dimensions,
-} from "react-native";
+import { StyleSheet, View, Dimensions } from "react-native";
 import init from "react_native_mqtt";
 import { AsyncStorage } from "react-native";
 import Map from "./Map";

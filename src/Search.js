@@ -9,29 +9,26 @@ import {
   Button
 } from "react-native";
 
-const Search = (props) => {
+const Search = props => {
+  //For input, user want to search spefic train number
+  const [specificTrain, setSpecificTrain] = useState();
   return (
-    <View>
-      <Image
-        style={{
-          width: 50,
-          height: 50,
-          top: 50,
-          alignItems: "center",
-          justifyContent: "center"
-        }}
-        source={require("../assets/lataus.png")}
+    <View style={styles.container}>
+      <Image style={styles.image} source={require("../assets/lataus.png")} />
+      <TextInput
+        style={styles.input}
+        onChangeText={text => setSpecificTrain(text)}
+        keyboardType="numeric"
       />
-      <Text>KISSA</Text>
-      <TextInput style={{ height: 40, borderColor: "gray", borderWidth: 1 }} />
-      <Button
-        style={{ fontSize: 20, color: "green" }}
-        styleDisabled={{ color: "red" }}
-        onPress={props.onPress}
-        title="Press Me"
-      >
-        Press Me
-      </Button>
+      <View style={styles.button}>
+        <Button
+          color="#64B82C"
+          onPress={() => props.fetchTrain(specificTrain)}
+          title="HAE"
+        >
+          HAE
+        </Button>
+      </View>
     </View>
   );
 };
@@ -42,10 +39,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center"
   },
-  mapStyle: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
-    top: 100
+  image: {
+    flex: 1,
+    width: 200,
+    height: 50,
+    resizeMode: "contain"
+  },
+  input: {
+    height: 40,
+    bottom: 20,
+    width: Dimensions.get("window").width / 1.5,
+    borderColor: "gray",
+    borderWidth: 1
+  },
+  button: {
+    fontSize: 20,
+    width: Dimensions.get("window").width / 2,
+    borderRadius: 25,
+    color: "#64B82C"
   }
 });
 
