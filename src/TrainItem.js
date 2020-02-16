@@ -7,7 +7,8 @@ const TrainItem = props => {
       <Button
         color="#64B82C"
         title={props.trainNumber.toString()}
-        onPress={() => alert(props.trainNumber)}
+        onPress={() =>
+          props.navigation.push("Map", { train: props.trainNumber })}
       >
         {props.trainNumber.toString()}
       </Button>

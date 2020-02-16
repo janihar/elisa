@@ -4,7 +4,69 @@ import init from "react_native_mqtt";
 import { AsyncStorage } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 
-const Map = ({ latitude, longitude }) => {
+init({
+  size: 10000,
+  storageBackend: AsyncStorage,
+  defaultExpires: 1000 * 3600 * 24,
+  enableCache: true,
+  reconnect: true,
+  sync: {}
+});
+
+//Saving our MQQT socket
+let client;
+
+const Map = ({ navigation, route }) => {
+  const [longitude, setLongitude] = useState(0);
+  const [latitude, setLatidude] = useState(0);
+  const { train } = route.params;
+  console.log("Juna : ", train);
+  const getTrain = async state => {
+  
+    const onMessageArrived = async message => {
+      let trainLocation = await message.payloadString;
+      let trainJson = await JSON.parse(trainLocation);
+      console.log(trainJson);
+      setLongitude(trainJson.location.coordinates[0]);
+      setLatidude(trainJson.location.coordinates[1]);
+    };
+    //Random client
+    client = new Paho.MQTT.Client(
+      "rata.digitraffic.fi",
+      443,
+      "myclientid_" + parseInt(Math.random() * 10000, 10)
+    );
+
+    client.onMessageArrived = onMessageArrived;
+    var options = {
+      useSSL: true,
+      timeout: 3,
+      //Gets Called if the connection has sucessfully been established
+      onSuccess: function() {
+        client.subscribe("train-locations/2020-02-16/" + train, {
+          qos: 0
+        });
+      },
+      //Gets Called if the connection could not be established
+      onFailure: function(message) {
+        alert("Connection failed: " + message.errorMessage);
+      }
+    };
+    client.connect(options);
+  };
+  //component did mount
+  useEffect(() => {
+    getTrain();
+  }, []);
+
+  //component will unmount
+  useEffect(() => {
+    return () => {
+      client.disconnect();
+      console.log("Disconnected");
+    };
+  }, []);
+
   return (
     <MapView
       style={styles.mapStyle}

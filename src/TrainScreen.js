@@ -3,7 +3,7 @@ import { StyleSheet, View, Dimensions, FlatList, Text } from "react-native";
 import Search from "./Search";
 import TrainItem from "./TrainItem";
 
-const TrainScreen = () => {
+const TrainScreen = ({ navigation }) => {
   //Getting json from server which includes every latest train numbers
   const [trainNumbers, setTrainNumbers] = useState();
   const [didFound, setDidFound] = useState(true);
@@ -24,10 +24,12 @@ const TrainScreen = () => {
       "https://rata.digitraffic.fi/api/v1/train-locations/latest/" + trainID
     );
     const trainData = await train.json();
-    if (trainData.length === 0) { // If nothing is found then set DidFound false and show message to user
+    if (trainData.length === 0) {
+      // If nothing is found then set DidFound false and show message to user
       setDidFound(false);
       setTrainNumbers(trainData);
-    } else { //Train did found, no error message needed
+    } else {
+      //Train did found, no error message needed
       setDidFound(true);
       setTrainNumbers(trainData);
     }
@@ -40,14 +42,14 @@ const TrainScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Search fetchTrain={fetchSpecificTrain} />
+      <Search fetchTrain={fetchSpecificTrain} navigation={navigation} />
 
       {didFound === false && <Text>JUNAA EI LÖYTYNYT</Text>}
 
       <FlatList
         style={styles.list}
         data={trainNumbers}
-        renderItem={({ item }) => <TrainItem trainNumber={item.trainNumber} />}
+        renderItem={({ item }) => <TrainItem trainNumber={item.trainNumber} navigation={navigation} />}
         keyExtractor={item => item.trainNumber.toString()}
       />
     </View>
