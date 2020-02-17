@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Dimensions } from "react-native";
+import {
+  StyleSheet,
+  Dimensions,
+  View,
+  ActivityIndicator,
+  Text
+} from "react-native";
 import init from "react_native_mqtt";
 import { AsyncStorage } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
@@ -20,13 +26,26 @@ const Map = ({ navigation, route }) => {
   const [longitude, setLongitude] = useState(0);
   const [latitude, setLatidude] = useState(0);
   const { train } = route.params;
-  console.log("Juna : ", train);
+
+  //Getting current date
+  const date = () => {
+    var today = new Date();
+    var date =
+      today.getFullYear() +
+      "-" +
+      (today.getMonth() >= 10
+        ? today.getMonth() + 1
+        : "0" + (today.getMonth() + 1)) +
+      "-" +
+      today.getDate();
+
+    return date.toString();
+  };
+
   const getTrain = async state => {
-  
     const onMessageArrived = async message => {
       let trainLocation = await message.payloadString;
       let trainJson = await JSON.parse(trainLocation);
-      console.log(trainJson);
       setLongitude(trainJson.location.coordinates[0]);
       setLatidude(trainJson.location.coordinates[1]);
     };
@@ -43,7 +62,7 @@ const Map = ({ navigation, route }) => {
       timeout: 3,
       //Gets Called if the connection has sucessfully been established
       onSuccess: function() {
-        client.subscribe("train-locations/2020-02-16/" + train, {
+        client.subscribe("train-locations/" + date() + "/" + train, {
           qos: 0
         });
       },
@@ -63,20 +82,30 @@ const Map = ({ navigation, route }) => {
   useEffect(() => {
     return () => {
       client.disconnect();
-      console.log("Disconnected");
     };
   }, []);
 
   return (
-    <MapView
-      style={styles.mapStyle}
-      provider={PROVIDER_GOOGLE}
-      zoomEnabled={true}
-    >
-      {longitude !== 0 && latitude !== 0 && (
-        <Marker coordinate={{ latitude: latitude, longitude: longitude }} />
+    <View>
+      {latitude === 0 && (
+        <View style={styles.loading}>
+          <ActivityIndicator size="large" />
+          <Text style={{ alignItems: "center", textAlign: "center" }}>
+            Paikannetaan junaa
+          </Text>
+        </View>
       )}
-    </MapView>
+
+      <MapView
+        style={styles.mapStyle}
+        provider={PROVIDER_GOOGLE}
+        zoomEnabled={true}
+      >
+        {longitude !== 0 && latitude !== 0 && (
+          <Marker coordinate={{ latitude: latitude, longitude: longitude }} />
+        )}
+      </MapView>
+    </View>
   );
 };
 
@@ -91,7 +120,6 @@ const styles = StyleSheet.create({
   },
   mapStyle: {
     width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
-    top: 100
+    height: Dimensions.get("window").height
   }
 });

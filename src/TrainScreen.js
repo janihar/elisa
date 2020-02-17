@@ -28,6 +28,7 @@ const TrainScreen = ({ navigation }) => {
       // If nothing is found then set DidFound false and show message to user
       setDidFound(false);
       setTrainNumbers(trainData);
+      //return false
     } else {
       //Train did found, no error message needed
       setDidFound(true);

@@ -28,9 +28,6 @@ const Search = props => {
         >
           HAE
         </Button>
-        <Button title="Navigate" onPress={() => props.navigation.push("Map")}>
-          Navigoi
-        </Button>
       </View>
     </View>
   );
