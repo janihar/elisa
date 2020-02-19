@@ -100,6 +100,12 @@ const Map = ({ navigation, route }) => {
         style={styles.mapStyle}
         provider={PROVIDER_GOOGLE}
         zoomEnabled={true}
+        initialRegion={{
+          latitude: 61.9241104,
+          longitude: 25.7481518,
+          latitudeDelta: 18,
+          longitudeDelta: 18
+        }}
       >
         {longitude !== 0 && latitude !== 0 && (
           <Marker coordinate={{ latitude: latitude, longitude: longitude }} />

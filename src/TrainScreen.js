@@ -2,28 +2,18 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View, Dimensions, FlatList, Text } from "react-native";
 import Search from "./Search";
 import TrainItem from "./TrainItem";
+import { fetchTrains, fetchSpecificTrain } from "./Functions/Functions";
 
 const TrainScreen = ({ navigation }) => {
   //Getting json from server which includes every latest train numbers
   const [trainNumbers, setTrainNumbers] = useState();
+  //Whether user did found a active train or not
   const [didFound, setDidFound] = useState(true);
 
-  //Fetch every latest trains
-  const fetchTrains = async () => {
-    const train = await fetch(
-      "https://rata.digitraffic.fi/api/v1/train-locations/latest/"
-    );
-    const trainData = await train.json();
-    setTrainNumbers(trainData);
-  };
+  //Get specific train
+  const getSpecificTrain = async trainID => {
+    const trainData = await fetchSpecificTrain(trainID);
 
-  //Specific train fetch
-  const fetchSpecificTrain = async trainID => {
-    //Fetching every latest train
-    const train = await fetch(
-      "https://rata.digitraffic.fi/api/v1/train-locations/latest/" + trainID
-    );
-    const trainData = await train.json();
     if (trainData.length === 0) {
       // If nothing is found then set DidFound false and show message to user
       setDidFound(false);
@@ -36,21 +26,30 @@ const TrainScreen = ({ navigation }) => {
     }
   };
 
+  //Get active trains
+  getTrains = async () => {
+    const response = await fetchTrains();
+    setTrainNumbers(response);
+  };
+
   //Component mounts for the very first time
   useEffect(() => {
-    fetchTrains();
+    getTrains();
   }, []);
 
   return (
     <View style={styles.container}>
-      <Search fetchTrain={fetchSpecificTrain} navigation={navigation} />
+      <Search fetchTrain={getSpecificTrain} navigation={navigation} />
 
       {didFound === false && <Text>JUNAA EI LÖYTYNYT</Text>}
 
       <FlatList
         style={styles.list}
         data={trainNumbers}
-        renderItem={({ item }) => <TrainItem trainNumber={item.trainNumber} navigation={navigation} />}
+        initialNumToRender={50}
+        renderItem={({ item }) => (
+          <TrainItem trainNumber={item.trainNumber} navigation={navigation} />
+        )}
         keyExtractor={item => item.trainNumber.toString()}
       />
     </View>
