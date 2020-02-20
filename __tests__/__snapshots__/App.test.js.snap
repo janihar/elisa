@@ -207,15 +207,17 @@ exports[`<App /> renders correctly 1`] = `
                         />
                         <TextInput
                           allowFontScaling={true}
-                          keyboardType="numeric"
                           onChangeText={[Function]}
+                          placeholder="Syötä juna"
                           rejectResponderTermination={true}
                           style={
                             Object {
                               "borderColor": "gray",
+                              "borderRadius": 20,
                               "borderWidth": 1,
                               "bottom": 20,
                               "height": 40,
+                              "textAlign": "center",
                               "width": 500,
                             }
                           }
@@ -278,40 +280,24 @@ exports[`<App /> renders correctly 1`] = `
                           </View>
                         </View>
                       </View>
-                      <RCTScrollView
-                        disableVirtualization={false}
-                        getItem={[Function]}
-                        getItemCount={[Function]}
-                        horizontal={false}
-                        initialNumToRender={10}
-                        keyExtractor={[Function]}
-                        maxToRenderPerBatch={10}
-                        numColumns={1}
-                        onContentSizeChange={[Function]}
-                        onEndReachedThreshold={2}
-                        onLayout={[Function]}
-                        onMomentumScrollEnd={[Function]}
-                        onScroll={[Function]}
-                        onScrollBeginDrag={[Function]}
-                        onScrollEndDrag={[Function]}
-                        removeClippedSubviews={false}
-                        renderItem={[Function]}
-                        scrollEventThrottle={50}
-                        stickyHeaderIndices={Array []}
-                        style={
-                          Object {
-                            "flex": 1,
-                            "marginHorizontal": 16,
-                            "top": 133.4,
-                            "width": 500,
+                      <View>
+                        <ActivityIndicator
+                          animating={true}
+                          color="#999999"
+                          hidesWhenStopped={true}
+                          size="large"
+                        />
+                        <Text
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "textAlign": "center",
+                            }
                           }
-                        }
-                        updateCellsBatchingPeriod={50}
-                        viewabilityConfigCallbackPairs={Array []}
-                        windowSize={21}
-                      >
-                        <View />
-                      </RCTScrollView>
+                        >
+                          Haetaan
+                        </Text>
+                      </View>
                     </View>
                   </View>
                 </View>

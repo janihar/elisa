@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<LoadingIndicator text={test}/> renders correctly 1`] = `
+<View>
+  <ActivityIndicator
+    animating={true}
+    color="#999999"
+    hidesWhenStopped={true}
+    size="large"
+  />
+  <Text
+    style={
+      Object {
+        "alignItems": "center",
+        "textAlign": "center",
+      }
+    }
+  />
+</View>
+`;
