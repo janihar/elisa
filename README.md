@@ -40,7 +40,7 @@ How to run:
 
 Installation
 
-Make sure you have installed Expo
+Make sure you have installed React Native and Expo
 
 Personally I prefer yarn in React Native projects
 
@@ -60,5 +60,5 @@ Scripts:
 "web": "expo start --web",
 "eject": "expo eject"
 
-Architecture: 
+Architecture: VR train architecture.pdf
 

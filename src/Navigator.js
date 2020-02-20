@@ -10,7 +10,11 @@ const Navigator = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Search" component={TrainScreen} options={{headerShown:false}} />
+        <Stack.Screen
+          name="Search"
+          component={TrainScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen
           name="Map"
           component={MapScreen}

@@ -16,7 +16,7 @@ init({
   sync: {}
 });
 
-//Saving our MQQT socket
+//Saving our MQTT socket
 let client;
 
 const Map = ({ route }) => {
@@ -24,10 +24,10 @@ const Map = ({ route }) => {
   const [latitude, setLatidude] = useState(0);
   const { train } = route.params;
 
-  const getTrain =  () => {
-    const onMessageArrived =  message => {
-      let trainLocation =  message.payloadString;
-      let trainJson =  JSON.parse(trainLocation);
+  const getTrain = () => {
+    const onMessageArrived = message => {
+      let trainLocation = message.payloadString;
+      let trainJson = JSON.parse(trainLocation);
       setLongitude(trainJson.location.coordinates[0]);
       setLatidude(trainJson.location.coordinates[1]);
     };

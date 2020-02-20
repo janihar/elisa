@@ -3,9 +3,9 @@
  * Format YYYY-mm-dd
  * Example 2020-02-19
  * dateFormat(new Date())
- * @param {date} today 
+ * @param {date} today
  */
-export const dateFormat = (today) => {
+export const dateFormat = today => {
   var date =
     today.getFullYear() +
     "-" +

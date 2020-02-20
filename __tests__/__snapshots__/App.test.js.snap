@@ -207,7 +207,6 @@ exports[`<App /> renders correctly 1`] = `
                         />
                         <TextInput
                           allowFontScaling={true}
-                          keyboardType="numeric"
                           onChangeText={[Function]}
                           placeholder="Syötä juna"
                           rejectResponderTermination={true}

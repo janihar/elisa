@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Button } from "react-native";
 import PropTypes from "prop-types";
-import styles from "../src/styles/Styles"
+import styles from "../src/styles/Styles";
 
 const TrainItem = props => {
   return (
@@ -24,5 +24,3 @@ TrainItem.propTypes = {
 };
 
 export default TrainItem;
-
-

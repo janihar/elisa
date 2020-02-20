@@ -12,7 +12,6 @@ const Search = props => {
         placeholder="Syötä juna"
         style={styles.input}
         onChangeText={text => setSpecificTrain(text)}
-        keyboardType="numeric"
       />
       <View style={styles.button}>
         <Button

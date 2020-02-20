@@ -10,7 +10,7 @@ export const fetchTrains = async () => {
 
     return trainData;
   } catch (error) {
-    alert(error)
+    alert(error);
   }
 };
 
@@ -20,7 +20,7 @@ export const fetchTrains = async () => {
  */
 export const fetchSpecificTrain = async trainID => {
   let fetchURL;
-
+  
   //User only gave a number
   if (isNumber(trainID)) {
     fetchURL =

@@ -5,6 +5,7 @@ import TrainItem from "./TrainItem";
 import { fetchTrains, fetchSpecificTrain } from "./Functions/Functions";
 import styles from "../src/styles/Styles";
 import LoadingIndicator from "./LoadingIndicator";
+
 const TrainScreen = ({ navigation }) => {
   //Getting json from server which includes every latest train numbers
   const [trainNumbers, setTrainNumbers] = useState();
@@ -54,7 +55,7 @@ const TrainScreen = ({ navigation }) => {
           renderItem={({ item }) => (
             <TrainItem trainNumber={item.trainNumber} navigation={navigation} />
           )}
-          keyExtractor={(item,index) => index.toString()}
+          keyExtractor={(item, index) => index.toString()}
         />
       ) : (
         <LoadingIndicator text={"Haetaan"} />
