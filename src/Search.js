@@ -1,13 +1,7 @@
-import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  View,
-  Dimensions,
-  TextInput,
-  Image,
-  Button
-} from "react-native";
-
+import React, { useState } from "react";
+import { View, TextInput, Image, Button } from "react-native";
+import styles from "../src/styles/Styles";
+import PropTypes from "prop-types";
 const Search = props => {
   //For input, user want to search spefic train number
   const [specificTrain, setSpecificTrain] = useState();
@@ -15,6 +9,7 @@ const Search = props => {
     <View style={styles.container}>
       <Image style={styles.image} source={require("../assets/lataus.png")} />
       <TextInput
+        placeholder="Syötä juna"
         style={styles.input}
         onChangeText={text => setSpecificTrain(text)}
         keyboardType="numeric"
@@ -31,32 +26,9 @@ const Search = props => {
     </View>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  image: {
-    flex: 1,
-    width: 200,
-    height: 50,
-    resizeMode: "contain"
-  },
-  input: {
-    height: 40,
-    bottom: 20,
-    width: Dimensions.get("window").width / 1.5,
-    borderColor: "gray",
-    borderWidth: 1
-  },
-  button: {
-    fontSize: 20,
-    width: Dimensions.get("window").width / 2,
-    borderRadius: 25,
-    color: "#64B82C"
-  }
-});
+
+Search.protoTypes = {
+  fetchTrain: PropTypes.func
+};
 
 export default Search;

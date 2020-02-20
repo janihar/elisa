@@ -1,9 +1,8 @@
 import * as React from "react";
-import { View, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import TrainScreen from "./TrainScreen";
-import Map from "./Map";
+import MapScreen from "./MapScreen";
 
 const Stack = createStackNavigator();
 
@@ -14,7 +13,7 @@ const Navigator = () => {
         <Stack.Screen name="Search" component={TrainScreen} options={{headerShown:false}} />
         <Stack.Screen
           name="Map"
-          component={Map}
+          component={MapScreen}
           options={{ title: "Juna kartalla" }}
         />
       </Stack.Navigator>

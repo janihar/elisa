@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Dimensions, Text, Button } from "react-native";
+import React from "react";
+import { View, Button } from "react-native";
+import PropTypes from "prop-types";
+import styles from "../src/styles/Styles"
 
 const TrainItem = props => {
   return (
@@ -8,7 +10,8 @@ const TrainItem = props => {
         color="#64B82C"
         title={props.trainNumber.toString()}
         onPress={() =>
-          props.navigation.push("Map", { train: props.trainNumber })}
+          props.navigation.push("Map", { train: props.trainNumber })
+        }
       >
         {props.trainNumber.toString()}
       </Button>
@@ -16,17 +19,10 @@ const TrainItem = props => {
   );
 };
 
+TrainItem.propTypes = {
+  trainNumber: PropTypes.number
+};
+
 export default TrainItem;
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#fff",
-    alignItems: "center"
-  },
-  button: { backgroundColor: "#64B82C" },
-  buttonContainer: {
-    flex: 1,
-    justifyContent: "center",
-    margin: 10
-  }
-});
+

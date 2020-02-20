@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Dimensions,
-  View,
-  ActivityIndicator,
-  Text
-} from "react-native";
+import { View } from "react-native";
 import init from "react_native_mqtt";
 import { AsyncStorage } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import { dateFormat } from "./Functions/MapFunctions";
+import styles from "./styles/Styles";
+import LoadingIndicator from "./LoadingIndicator";
 
 init({
   size: 10000,
@@ -22,30 +19,15 @@ init({
 //Saving our MQQT socket
 let client;
 
-const Map = ({ navigation, route }) => {
+const Map = ({ route }) => {
   const [longitude, setLongitude] = useState(0);
   const [latitude, setLatidude] = useState(0);
   const { train } = route.params;
 
-  //Getting current date
-  const date = () => {
-    var today = new Date();
-    var date =
-      today.getFullYear() +
-      "-" +
-      (today.getMonth() >= 10
-        ? today.getMonth() + 1
-        : "0" + (today.getMonth() + 1)) +
-      "-" +
-      today.getDate();
-
-    return date.toString();
-  };
-
-  const getTrain = async state => {
-    const onMessageArrived = async message => {
-      let trainLocation = await message.payloadString;
-      let trainJson = await JSON.parse(trainLocation);
+  const getTrain =  () => {
+    const onMessageArrived =  message => {
+      let trainLocation =  message.payloadString;
+      let trainJson =  JSON.parse(trainLocation);
       setLongitude(trainJson.location.coordinates[0]);
       setLatidude(trainJson.location.coordinates[1]);
     };
@@ -62,15 +44,19 @@ const Map = ({ navigation, route }) => {
       timeout: 3,
       //Gets Called if the connection has sucessfully been established
       onSuccess: function() {
-        client.subscribe("train-locations/" + date() + "/" + train, {
-          qos: 0
-        });
+        client.subscribe(
+          "train-locations/" + dateFormat(new Date()) + "/" + train,
+          {
+            qos: 0
+          }
+        );
       },
       //Gets Called if the connection could not be established
       onFailure: function(message) {
         alert("Connection failed: " + message.errorMessage);
       }
     };
+
     client.connect(options);
   };
   //component did mount
@@ -89,10 +75,7 @@ const Map = ({ navigation, route }) => {
     <View>
       {latitude === 0 && (
         <View style={styles.loading}>
-          <ActivityIndicator size="large" />
-          <Text style={{ alignItems: "center", textAlign: "center" }}>
-            Paikannetaan junaa
-          </Text>
+          <LoadingIndicator text={"Paikannetaan junaa"} />
         </View>
       )}
 
@@ -116,16 +99,3 @@ const Map = ({ navigation, route }) => {
 };
 
 export default Map;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  mapStyle: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height
-  }
-});

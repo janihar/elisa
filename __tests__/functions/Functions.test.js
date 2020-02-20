@@ -1,36 +1,22 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import { fetchTrains, fetchSpecificTrain } from "../../src/Functions";
+import { dateFormat } from "../../src/Functions/MapFunctions";
+import { isNumber, checkURL } from "../../src/Functions/Functions";
 
-describe("API functions works properly", () => {
-  const trainData = [
-    {
-      trainNumber: 7,
-      departureDate: "2020-02-17",
-      timestamp: "2020-02-17T17:13:24.000Z",
-      location: { type: "Point", coordinates: [29.896686, 61.986411] },
-      speed: 149
-    },
-    {
-      trainNumber: 9,
-      departureDate: "2020-02-17",
-      timestamp: "2020-02-17T17:22:02.000Z",
-      location: { type: "Point", coordinates: [29.014322, 61.276224] },
-      speed: 133
-    },
-    {
-      trainNumber: 10,
-      departureDate: "2020-02-17",
-      timestamp: "2020-02-17T17:22:01.000Z",
-      location: { type: "Point", coordinates: [25.105901, 60.40399] },
-      speed: 138
-    }
-  ];
-
-
-  it("fetchTrains returns data", () => {
-    expect(trainData.length).toBeGreaterThan(0);
+describe("Function testing", () => {
+  //JavaScript counts months from 0 to 11.
+  //January is 0. December is 11
+  it("Right date format", () => {
+    expect(dateFormat(new Date(2020, 1, 19))).toBe("2020-02-19");
   });
-
-;
+  it("Is really number", () => {
+    expect(isNumber(2)).toBe(true);
+    expect(isNumber("test")).toBe(false);
+  });
+  it("Is valid URL", () => {
+    let validURL = "https://rata.digitraffic.fi/api/";
+    let invalidURL = "https://ratas.digitrsdavbic.fi/api/";
+    expect(checkURL(validURL)).toBe(validURL);
+    expect(checkURL(invalidURL)).toBe(false);
+  });
 });

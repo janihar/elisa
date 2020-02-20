@@ -2,12 +2,16 @@
  * Fetch active trains
  */
 export const fetchTrains = async () => {
-  const train = await fetch(
-    "https://rata.digitraffic.fi/api/v1/train-locations/latest/"
-  );
-  const trainData = await train.json();
+  try {
+    const train = await fetch(
+      "https://rata.digitraffic.fi/api/v1/train-locations/latest/"
+    );
+    const trainData = await train.json();
 
-  return trainData;
+    return trainData;
+  } catch (error) {
+    alert(error)
+  }
 };
 
 /**

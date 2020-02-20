@@ -26,13 +26,16 @@ exports[`<Search /> renders correctly 1`] = `
     allowFontScaling={true}
     keyboardType="numeric"
     onChangeText={[Function]}
+    placeholder="Syötä juna"
     rejectResponderTermination={true}
     style={
       Object {
         "borderColor": "gray",
+        "borderRadius": 20,
         "borderWidth": 1,
         "bottom": 20,
         "height": 40,
+        "textAlign": "center",
         "width": 500,
       }
     }
